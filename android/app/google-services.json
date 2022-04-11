@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "85119385908",
+    "project_id": "technokingdiesel",
+    "storage_bucket": "technokingdiesel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:85119385908:android:bb1c1b64d1f02d15a6a561",
+        "android_client_info": {
+          "package_name": "com.technokingdiesel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "85119385908-8n0ms6f1b2n2a9snocauv2t55uobcs9q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.technokingdiesel",
+            "certificate_hash": "fa0a016adc0ff5a3a3f6b73e1a341b85c4a7077e"
+          }
+        },
+        {
+          "client_id": "85119385908-tm961ddlkoj1qlsqh7v2da7q38l12c18.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByOsUr9TQjTeMf4hlOAM-j5TUlvS6JqVQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "85119385908-tm961ddlkoj1qlsqh7v2da7q38l12c18.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
