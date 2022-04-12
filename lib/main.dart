@@ -8,7 +8,6 @@ import 'package:technokingdiesel/widget.dart';
 
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await Firebase.initializeApp();
 
@@ -23,10 +22,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
   void initState() {
-    FlutterNativeSplash.remove();
     super.initState();
+    initialization();
+  }
+
+  void initialization() async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    FlutterNativeSplash.remove();
   }
 
   @override
@@ -34,7 +38,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+          fontFamily: 'Nunito',
           appBarTheme: AppBarTheme(
+            titleTextStyle: TextStyle(fontFamily: 'Nunito',fontWeight: FontWeight.w700,fontSize: 20),
             backgroundColor: Color(0xFF4080B4),
           ),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
