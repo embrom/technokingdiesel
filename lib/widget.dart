@@ -62,9 +62,9 @@ class _DetailState extends State<Detail> {
                 onPressed: () async {
                   await FirebaseFirestore.instance
                       .collection('data')
-                      .doc(widget.data!['id'])
+                      .doc(widget.data!['date'])
                       .delete();
-                         ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                  ScaffoldMessenger.of(context).removeCurrentSnackBar();
                   Navigator.of(context).pop();
                 },
                 child: const Text('Delete',
@@ -106,21 +106,33 @@ class _DetailState extends State<Detail> {
             ? FloatingActionButton(
                 onPressed: () async {
                   if (status == Status.add) {
+                    for (var i = 0; i < 50; i++) {
+                         List<String> splitList = (seri!+i.toString()).split(" ");
+                    List<String> indexList = [];
+                    for (int i = 0; i < splitList.length; i++) {
+                      for (int y = 1; y < splitList[i].length + 1; y++) {
+                        indexList
+                            .add(splitList[i].substring(0, y).toLowerCase());
+                      }
+                    }
                     await FirebaseFirestore.instance
                         .collection('data')
-                        .doc( DateTime.now().toIso8601String())
-                        .set({'seri': seri});
-                         Navigator.of(context).pop();
+                        .doc(DateTime.now().toIso8601String())
+                        .set({'seri':(seri!+i.toString()),'searchArray':indexList,  'date': DateTime.now().toIso8601String()});
+                    }
+                 
+
+                    Navigator.of(context).pop();
                   } else {
                     await FirebaseFirestore.instance
                         .collection('data')
-                        .doc(widget.data!['id'])
+                        .doc(widget.data!['date'])
                         .update({
                       'seri': seri,
                       'date': DateTime.now().toIso8601String()
                     });
                     Navigator.of(context).pop();
-                     Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   }
                 },
                 child: (Icon(Icons.done_outline_rounded)))

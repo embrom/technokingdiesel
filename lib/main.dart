@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:paginate_firestore/bloc/pagination_listeners.dart';
+import 'package:paginate_firestore/paginate_firestore.dart';
 import 'package:technokingdiesel/widget.dart';
 
 const page = PageTransitionsTheme(builders: {
@@ -99,19 +101,101 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
   TextEditingController? _addNameController;
   String? searchString = '';
   var focusNode = FocusNode();
   @override
   void initState() {
     super.initState();
+    getProducts();
     _addNameController = TextEditingController();
   }
+
+  List<DocumentSnapshot<Map<String, dynamic>>> products =
+      []; // stores fetched products
+  bool isLoading = false; // track if products fetching
+  bool hasMore = true; // flag for more products available or not
+  int documentLimit = 20; // docs to be fetched per request
+  DocumentSnapshot<Map<String, dynamic>>?
+      lastDocument; // flag for last document from where next 10 records to be fetched
+  ScrollController _scrollController =
+      ScrollController(); // listener for listview scrolling
+
+  getProducts() async {
+    if (!hasMore) {
+      print('No More Products');
+      return;
+    }
+    if (isLoading) {
+      return;
+    }
+    setState(() {
+      isLoading = true;
+    });
+    QuerySnapshot<Map<String, dynamic>> querySnapshot;
+    if (lastDocument == null) {
+      log('ge last');
+      querySnapshot = await FirebaseFirestore.instance
+          .collection('data')
+          // .orderBy('date')
+          .limit(documentLimit)
+          .orderBy('date', descending: true)
+          .get();
+    } else {
+      log('ge page');
+      querySnapshot = await FirebaseFirestore.instance
+          .collection('data')
+          .orderBy('date', descending: true)
+          .limit(documentLimit)
+          // .orderBy('date')
+          .startAfterDocument(lastDocument!)
+          .get();
+    }
+    if (querySnapshot.docs.length < documentLimit) {
+      hasMore = false;
+    }
+    if (querySnapshot.docs.isEmpty) {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+    log(querySnapshot.docs.last.id);
+    lastDocument = querySnapshot.docs.last;
+
+    products.addAll(querySnapshot.docs);
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    log('did');
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    log('dsisptos');
+    super.dispose();
+  }
+
+  PaginateRefreshedChangeListener refreshChangeListener =
+      PaginateRefreshedChangeListener();
 
   @override
   Widget build(BuildContext context) {
     log('scafold');
+    _scrollController.addListener(() {
+      double maxScroll = _scrollController.position.maxScrollExtent;
+      double currentScroll = _scrollController.position.pixels;
+      double delta = MediaQuery.of(context).size.height * 0.20;
+      if (maxScroll - currentScroll <= delta) {
+        getProducts();
+      }
+    });
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -137,58 +221,95 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
         ),
-        body: Center(
-          child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirebaseFirestore.instance
-                  .collection('data')
-                  .orderBy('seri')
-                  .limit(50)
-                  .snapshots(),
-              builder: (context, snapshot) {
-                return snapshot.connectionState == ConnectionState.waiting
-                    ? Center(
-                        child: CircularProgressIndicator(
-                          backgroundColor: Color(0xFF4080B4),
-                          color: Color.fromARGB(255, 0, 80, 145),
-                        ),
-                      )
-                    : ListView.builder(
-                        shrinkWrap: true,
-                        reverse: true,
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          _counter = snapshot.data!.docs.length;
-                          log('rebuild');
-                          return Card(
-                            child: InkWell(
-                              onTap: () {
-                                focusNode.unfocus();
-                                Navigator.of(context)
-                                    .push(MaterialPageRoute(builder: (context) {
-                                  var data = snapshot.data!.docs.reversed
-                                      .toList()[index]
-                                      .data();
-                                  data['id'] = snapshot.data!.docs.reversed
-                                      .toList()[index]
-                                      .id;
-                                  return Detail('', data);
-                                }));
-                              },
-                              child: Text(
-                                snapshot.data!.docs.reversed
-                                    .toList()[index]
-                                    .data()['seri']
-                                    .toString(),
-                                style: TextStyle(fontSize: 25),
-                              ),
-                            ),
-                          );
-                        },
-                      );
-              }),
-        ),
+        body: searchString == ''
+            ? RefreshIndicator(
+                child: PaginateFirestore( itemBuilderType: PaginateBuilderType.listView,
+                  // orderBy is compulsary to enable pagination
+                  query: FirebaseFirestore.instance.collection('data'),
+
+                  listeners: [
+                    refreshChangeListener,
+                  ],
+                  itemBuilder: (context, documentSnapshots, index) =>  InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => Detail(
+                                        '',
+                                        (products[index].data()
+                                            as Map<String, dynamic>)),
+                                  ));
+                                },
+                                child:ListTile(
+                    leading: CircleAvatar(child: Icon(Icons.person)),
+                    title:
+                        Text((documentSnapshots[index].data() as Map)['seri']),
+                    subtitle: Text(documentSnapshots[index].id),
+                  
+                 
+                ))),
+                onRefresh: () async {
+                  refreshChangeListener.refreshed = true;
+                },
+              )
+            : StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                stream: FirebaseFirestore.instance
+                    .collection('data')
+                    .limit(20)
+                    .where('searchArray', arrayContains: searchString)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  return snapshot.connectionState == ConnectionState.waiting
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            backgroundColor: Color(0xFF4080B4),
+                            color: Color.fromARGB(255, 0, 80, 145),
+                          ),
+                        )
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          reverse: true,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            log('rebuild');
+                            return InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => Detail(
+                                        '',
+                                        (products[index].data()
+                                            as Map<String, dynamic>)),
+                                  ));
+                                },
+                                child: ListTile(
+                                  leading:
+                                      CircleAvatar(child: Icon(Icons.person)),
+                                  title: Text((snapshot.data!.docs[index]
+                                      .data()['seri'])),
+                                  subtitle: Text(snapshot.data!.docs[index]
+                                      .data()['date']),
+                                ));
+                          },
+                        );
+                }),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
+            // for (var i = 1; i <= 100; i++) {
+
+            //   List<String> splitList =i.toString().split(" ");
+            //         List<String> indexList = [];
+            //         for (int i = 0; i < splitList.length; i++) {
+            //           for (int y = 1; y < splitList[i].length + 1; y++) {
+            //             indexList
+            //                 .add(splitList[i].substring(0, y).toLowerCase());
+            //           }
+            //         }
+            //   await FirebaseFirestore.instance
+            //       .collection('data')
+            //       .doc(DateTime.now().toIso8601String())
+            //       .set(
+            //           {'seri': '$i', 'date': DateTime.now().toIso8601String()});
+            // }
+
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => Detail('Add Document'),
             ));
