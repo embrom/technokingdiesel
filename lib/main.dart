@@ -107,80 +107,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    getProducts();
+
     _addNameController = TextEditingController();
   }
 
-  List<DocumentSnapshot<Map<String, dynamic>>> products =
-      []; // stores fetched products
-  bool isLoading = false; // track if products fetching
-  bool hasMore = true; // flag for more products available or not
-  int documentLimit = 20; // docs to be fetched per request
-  DocumentSnapshot<Map<String, dynamic>>?
-      lastDocument; // flag for last document from where next 10 records to be fetched
-  ScrollController _scrollController =
-      ScrollController(); // listener for listview scrolling
-
-  getProducts() async {
-    if (!hasMore) {
-      print('No More Products');
-      return;
-    }
-    if (isLoading) {
-      return;
-    }
-    setState(() {
-      isLoading = true;
-    });
-    QuerySnapshot<Map<String, dynamic>> querySnapshot;
-    if (lastDocument == null) {
-      log('ge last');
-      querySnapshot = await FirebaseFirestore.instance
-          .collection('data')
-          // .orderBy('date')
-          .limit(documentLimit)
-          .orderBy('date', descending: true)
-          .get();
-    } else {
-      log('ge page');
-      querySnapshot = await FirebaseFirestore.instance
-          .collection('data')
-          .orderBy('date', descending: true)
-          .limit(documentLimit)
-          // .orderBy('date')
-          .startAfterDocument(lastDocument!)
-          .get();
-    }
-    if (querySnapshot.docs.length < documentLimit) {
-      hasMore = false;
-    }
-    if (querySnapshot.docs.isEmpty) {
-      setState(() {
-        isLoading = false;
-      });
-      return;
-    }
-    log(querySnapshot.docs.last.id);
-    lastDocument = querySnapshot.docs.last;
-
-    products.addAll(querySnapshot.docs);
-
-    setState(() {
-      isLoading = false;
-    });
-  }
-
-  @override
-  void didChangeDependencies() {
-    log('did');
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    log('dsisptos');
-    super.dispose();
-  }
+  List<DocumentSnapshot<Map<String, dynamic>>> products = [];
+  bool isLoading = false;
+  bool hasMore = true;
+  int documentLimit = 20;
+  DocumentSnapshot<Map<String, dynamic>>? lastDocument;
 
   PaginateRefreshedChangeListener refreshChangeListener =
       PaginateRefreshedChangeListener();
@@ -188,14 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     log('scafold');
-    _scrollController.addListener(() {
-      double maxScroll = _scrollController.position.maxScrollExtent;
-      double currentScroll = _scrollController.position.pixels;
-      double delta = MediaQuery.of(context).size.height * 0.20;
-      if (maxScroll - currentScroll <= delta) {
-        getProducts();
-      }
-    });
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -223,30 +151,31 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: searchString == ''
             ? RefreshIndicator(
-                child: PaginateFirestore( itemBuilderType: PaginateBuilderType.listView,
-                  // orderBy is compulsary to enable pagination
-                  query: FirebaseFirestore.instance.collection('data'),
-
-                  listeners: [
-                    refreshChangeListener,
-                  ],
-                  itemBuilder: (context, documentSnapshots, index) =>  InkWell(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Detail(
-                                        '',
-                                        (products[index].data()
-                                            as Map<String, dynamic>)),
-                                  ));
-                                },
-                                child:ListTile(
-                    leading: CircleAvatar(child: Icon(Icons.person)),
-                    title:
-                        Text((documentSnapshots[index].data() as Map)['seri']),
-                    subtitle: Text(documentSnapshots[index].id),
-                  
-                 
-                ))),
+                child: PaginateFirestore(
+                    itemBuilderType: PaginateBuilderType.listView,
+                    // orderBy is compulsary to enable pagination
+                    query: FirebaseFirestore.instance
+                        .collection('data')
+                        .orderBy('date', descending: true),
+                    isLive: true,
+                    listeners: [
+                      refreshChangeListener,
+                    ],
+                    itemBuilder: (context, documentSnapshots, index) => InkWell(
+                        onTap: () {
+                          var data = (documentSnapshots[index].data()
+                              as Map<String, dynamic>);
+                          data['id'] = documentSnapshots[index].id;focusNode.unfocus();
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => Detail('', data),
+                          ));
+                        },
+                        child: ListTile(
+                          leading: CircleAvatar(child: Icon(Icons.person)),
+                          title: Text(
+                              (documentSnapshots[index].data() as Map)['seri']),
+                          subtitle: Text(documentSnapshots[index].id),
+                        ))),
                 onRefresh: () async {
                   refreshChangeListener.refreshed = true;
                 },
@@ -272,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           itemBuilder: (context, index) {
                             log('rebuild');
                             return InkWell(
-                                onTap: () {
+                                onTap: () {focusNode.unfocus();
                                   Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => Detail(
                                         '',
@@ -293,23 +222,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 }),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            // for (var i = 1; i <= 100; i++) {
-
-            //   List<String> splitList =i.toString().split(" ");
-            //         List<String> indexList = [];
-            //         for (int i = 0; i < splitList.length; i++) {
-            //           for (int y = 1; y < splitList[i].length + 1; y++) {
-            //             indexList
-            //                 .add(splitList[i].substring(0, y).toLowerCase());
-            //           }
-            //         }
-            //   await FirebaseFirestore.instance
-            //       .collection('data')
-            //       .doc(DateTime.now().toIso8601String())
-            //       .set(
-            //           {'seri': '$i', 'date': DateTime.now().toIso8601String()});
-            // }
-
+         
+            focusNode.unfocus();
             Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => Detail('Add Document'),
             ));

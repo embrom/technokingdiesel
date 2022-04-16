@@ -25,9 +25,11 @@ class _DetailState extends State<Detail> {
   void initState() {
     if (widget.which == 'Edit') {
       status = Status.edit;
+      seri = widget.data!['seri'];
     } else if (widget.which == 'Add Document') {
       status = Status.add;
     } else {
+      seri = widget.data!['seri'];
       status = Status.view;
     }
     super.initState();
@@ -62,7 +64,7 @@ class _DetailState extends State<Detail> {
                 onPressed: () async {
                   await FirebaseFirestore.instance
                       .collection('data')
-                      .doc(widget.data!['date'])
+                      .doc(widget.data!['id'])
                       .delete();
                   ScaffoldMessenger.of(context).removeCurrentSnackBar();
                   Navigator.of(context).pop();
@@ -93,7 +95,7 @@ class _DetailState extends State<Detail> {
               status != Status.add ? widget.data!['seri'].toString() : '',
           decoration: InputDecoration(
             border:
-                status != Status.view ? OutlineInputBorder() : InputBorder.none,
+                status == Status.view ? InputBorder.none: OutlineInputBorder() ,
           ),
         ),
       );
@@ -106,8 +108,7 @@ class _DetailState extends State<Detail> {
             ? FloatingActionButton(
                 onPressed: () async {
                   if (status == Status.add) {
-                    for (var i = 0; i < 50; i++) {
-                         List<String> splitList = (seri!+i.toString()).split(" ");
+                    List<String> splitList = (seri!.toString()).split(" ");
                     List<String> indexList = [];
                     for (int i = 0; i < splitList.length; i++) {
                       for (int y = 1; y < splitList[i].length + 1; y++) {
@@ -118,21 +119,32 @@ class _DetailState extends State<Detail> {
                     await FirebaseFirestore.instance
                         .collection('data')
                         .doc(DateTime.now().toIso8601String())
-                        .set({'seri':(seri!+i.toString()),'searchArray':indexList,  'date': DateTime.now().toIso8601String()});
-                    }
-                 
+                        .set({
+                      'seri': (seri!.toString()),
+                      'searchArray': indexList,
+                      'date': DateTime.now().toIso8601String()
+                    });
 
                     Navigator.of(context).pop();
                   } else {
+                       List<String> splitList = (seri!.toString()).split(" ");
+                    List<String> indexList = [];
+                    for (int i = 0; i < splitList.length; i++) {
+                      for (int y = 1; y < splitList[i].length + 1; y++) {
+                        indexList
+                            .add(splitList[i].substring(0, y).toLowerCase());
+                      }
+                    }
                     await FirebaseFirestore.instance
                         .collection('data')
-                        .doc(widget.data!['date'])
+                        .doc(widget.data!['id'])
                         .update({
-                      'seri': seri,
+                      'seri': seri,'searchArray':indexList,
                       'date': DateTime.now().toIso8601String()
                     });
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
+                   
                   }
                 },
                 child: (Icon(Icons.done_outline_rounded)))
