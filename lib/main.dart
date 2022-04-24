@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:paginate_firestore/bloc/pagination_listeners.dart';
 import 'package:paginate_firestore/paginate_firestore.dart';
-import 'package:technokingdiesel/widget.dart';
+
+import 'package:technokingdiesel/add.dart';
+import 'package:technokingdiesel/update.dart';
+import 'package:technokingdiesel/view.dart';
 
 const page = PageTransitionsTheme(builders: {
   TargetPlatform.android: CupertinoPageTransitionsBuilder(),
@@ -43,25 +46,26 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Techno King',
       theme: ThemeData(
           pageTransitionsTheme: page,
           inputDecorationTheme: InputDecorationTheme(
             fillColor: Colors.white,
-            contentPadding: EdgeInsets.all(1),
+            contentPadding: EdgeInsets.all(10),
             filled: true,
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide(
                 color: Color.fromARGB(255, 0, 80, 145),
                 width: 2,
               ),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(5),
               borderSide: BorderSide(
                 color: Color.fromARGB(255, 0, 80, 145),
-                width: 4,
+                width: 2,
               ),
             ),
             border: OutlineInputBorder(
@@ -71,6 +75,7 @@ class _MyAppState extends State<MyApp> {
           fontFamily: 'Nunito',
           appBarTheme: AppBarTheme(
             titleTextStyle: TextStyle(
+                color: Colors.white,
                 fontFamily: 'Nunito',
                 fontWeight: FontWeight.w700,
                 fontSize: 20),
@@ -123,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     log('scafold');
-
+   
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -161,21 +166,23 @@ class _MyHomePageState extends State<MyHomePage> {
                     listeners: [
                       refreshChangeListener,
                     ],
-                    itemBuilder: (context, documentSnapshots, index) => InkWell(
-                        onTap: () {
-                          var data = (documentSnapshots[index].data()
-                              as Map<String, dynamic>);
-                          data['id'] = documentSnapshots[index].id;focusNode.unfocus();
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Detail('', data),
+                    itemBuilder: (context, documentSnapshots, index) {
+                      Map data2 = documentSnapshots[index].data() as Map;
+                      return InkWell(
+                          onTap: () {
+                            // data['id'] = documentSnapshots[index].id;
+                            focusNode.unfocus();
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                View(data2, documentSnapshots[index].id),
+                            ));
+                          },
+                          child: ListTile(
+                            leading: CircleAvatar(child: Icon(Icons.person)),
+                            title: Text(data2['injectionPump']!),
+                            subtitle: Text(documentSnapshots[index].id),
                           ));
-                        },
-                        child: ListTile(
-                          leading: CircleAvatar(child: Icon(Icons.person)),
-                          title: Text(
-                              (documentSnapshots[index].data() as Map)['seri']),
-                          subtitle: Text(documentSnapshots[index].id),
-                        ))),
+                    }),
                 onRefresh: () async {
                   refreshChangeListener.refreshed = true;
                 },
@@ -183,8 +190,9 @@ class _MyHomePageState extends State<MyHomePage> {
             : StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                 stream: FirebaseFirestore.instance
                     .collection('data')
-                    .limit(20)
-                    .where('searchArray', arrayContains: searchString)
+                    .limit(30)
+                    .where('searchArray',
+                        arrayContains: searchString!.toLowerCase())
                     .snapshots(),
                 builder: (context, snapshot) {
                   return snapshot.connectionState == ConnectionState.waiting
@@ -201,31 +209,31 @@ class _MyHomePageState extends State<MyHomePage> {
                           itemBuilder: (context, index) {
                             log('rebuild');
                             return InkWell(
-                                onTap: () {focusNode.unfocus();
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Detail(
-                                        '',
-                                        (products[index].data()
-                                            as Map<String, dynamic>)),
-                                  ));
+                                onTap: () {
+                                  focusNode.unfocus();
+                                  // Navigator.of(context).push(MaterialPageRoute(
+                                  //   builder: (context) => Detail(
+                                  //       '',
+                                  //       (products[index].data()
+                                  //           as Map<String, dynamic>)),
+                                  // ));
                                 },
                                 child: ListTile(
                                   leading:
                                       CircleAvatar(child: Icon(Icons.person)),
                                   title: Text((snapshot.data!.docs[index]
-                                      .data()['seri'])),
+                                      .data()['injectionPump'])),
                                   subtitle: Text(snapshot.data!.docs[index]
-                                      .data()['date']),
+                                      .data()['note']),
                                 ));
                           },
                         );
                 }),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-         
             focusNode.unfocus();
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Detail('Add Document'),
+              builder: (context) => Detail(),
             ));
           },
           child: const Icon(Icons.add),
