@@ -128,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     log('scafold');
-   
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
@@ -168,19 +168,75 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                     itemBuilder: (context, documentSnapshots, index) {
                       Map data2 = documentSnapshots[index].data() as Map;
-                      return InkWell(
-                          onTap: () {
-                            // data['id'] = documentSnapshots[index].id;
-                            focusNode.unfocus();
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) =>
-                                View(data2, documentSnapshots[index].id),
-                            ));
-                          },
-                          child: ListTile(
-                            leading: CircleAvatar(child: Icon(Icons.person)),
-                            title: Text(data2['injectionPump']!),
-                            subtitle: Text(documentSnapshots[index].id),
+                      return Container(decoration: BoxDecoration(borderRadius: BorderRadius.circular(5),border: Border.all(color: Color.fromARGB(255, 0, 80, 145),width: 2,)),
+                          margin: EdgeInsets.only(top: 15, left: 10, right: 10),
+                          child: InkWell(
+                            onTap: () {
+                              // data['id'] = documentSnapshots[index].id;
+                              focusNode.unfocus();
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    View(data2, documentSnapshots[index].id),
+                              ));
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 8),
+                              child: ListTile(
+                                title: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      data2['injectionPump']!,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700,
+                                        color: Color.fromARGB(255, 0, 80, 145),
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text('VEHICLE-MODEL: '),
+                                        Text(data2['vehicleType']!,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700)),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text('ENGINGE-TPYE: '),
+                                        Text(data2['engineType']!,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700)),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text('GOVERNER: '),
+                                        Text(data2['governor']!,
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w700)),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                subtitle: Column(
+                                  children: [Text('TIMER: ' + data2['timer'])],
+                                ),
+                                trailing: Column(
+                                  children: [
+                                    Text(data2['manufacturer'],
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w700)),
+                                  ],
+                                ),
+                              ),
+                            ),
                           ));
                     }),
                 onRefresh: () async {
@@ -224,7 +280,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   title: Text((snapshot.data!.docs[index]
                                       .data()['injectionPump'])),
                                   subtitle: Text(snapshot.data!.docs[index]
-                                      .data()['note']),
+                                      .data()['engineType']),
                                 ));
                           },
                         );
@@ -233,7 +289,7 @@ class _MyHomePageState extends State<MyHomePage> {
           onPressed: () async {
             focusNode.unfocus();
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => Detail(),
+              builder: (context) => Add(),
             ));
           },
           child: const Icon(Icons.add),

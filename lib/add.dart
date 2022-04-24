@@ -3,12 +3,13 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class Detail extends StatefulWidget {
+class Add extends StatefulWidget {
   @override
-  _DetailState createState() => _DetailState();
+  @override
+  _UpdateState createState() => _UpdateState();
 }
 
-class _DetailState extends State<Detail> {
+class _UpdateState extends State<Add> {
   String injectionPump = '';
   String governor = '';
   String timer = '';
@@ -76,143 +77,144 @@ class _DetailState extends State<Detail> {
   String advanceAngle6 = '';
   String note = '';
   List<String> indexList = [];
+
   @override
   Widget build(BuildContext context) {
     var title1 = TextStyle(fontSize: 16, fontWeight: FontWeight.w700);
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      floatingActionButton: FloatingActionButton(onPressed: () async {
-        if (manufacturer != '') {
-          List<String> manu = (manufacturer.toString()).split(' ');
+      floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.done_outline_rounded),
+          onPressed: () async {
+            if (manufacturer != '') {
+              List<String> manu = (manufacturer.toString()).split(' ');
 
-          for (int i = 0; i < manu.length; i++) {
-            for (int y = 1; y < manu[i][i].length + 1; y++) {
-              indexList.add(manu[i].substring(0, y).toLowerCase());
+              for (int i = 0; i < manu.length; i++) {
+                for (int y = 1; y < manu[i].length + 1; y++) {
+                  indexList.add(manu[i].substring(0, y).toLowerCase());
+                }
+              }
             }
-          }
-        }
-        if (vehicleType != '') {
-          List<String> vehi = (vehicleType.toString()).split(' ');
+            if (vehicleType != '') {
+              List<String> vehi = (vehicleType.toString()).split(' ');
 
-          for (int i = 0; i < vehi.length; i++) {
-            for (int y = 1; y < vehi[i][i].length + 1; y++) {
-              indexList.add(vehi[i].substring(0, y).toLowerCase());
+              for (int i = 0; i < vehi.length; i++) {
+                for (int y = 1; y < vehi[i].length + 1; y++) {
+                  indexList.add(vehi[i].substring(0, y).toLowerCase());
+                }
+              }
             }
-          }
-        }
-        if (governor != '') {
-          List<String> gover = (governor.toString()).split(' ');
-          for (int i = 0; i < gover.length; i++) {
-            for (int y = 1; y < gover[i].length + 1; y++) {
-              indexList.add(gover[i].substring(0, y).toLowerCase());
+            if (governor != '') {
+              List<String> gover = (governor.toString()).split(' ');
+              for (int i = 0; i < gover.length; i++) {
+                for (int y = 1; y < gover[i].length + 1; y++) {
+                  indexList.add(gover[i].substring(0, y).toLowerCase());
+                }
+              }
             }
-          }
-        }
-        if (engineType != '') {
-          List<String> engi = (engineType.toString()).split(' ');
+            if (engineType != '') {
+              List<String> engi = (engineType.toString()).split(' ');
 
-          for (int i = 0; i < engi.length; i++) {
-            for (int y = 1; y < engi[i].length + 1; y++) {
-              indexList.add(engi[i].substring(0, y).toLowerCase());
+              for (int i = 0; i < engi.length; i++) {
+                for (int y = 1; y < engi[i].length + 1; y++) {
+                  indexList.add(engi[i].substring(0, y).toLowerCase());
+                }
+              }
             }
-          }
-        }
-        if (timer != '') {
-          List<String> time = (timer.toString()).split(' ');
+            if (timer != '') {
+              List<String> time = (timer.toString()).split(' ');
 
-          for (int i = 0; i < time.length; i++) {
-            for (int y = 1; y < time[i].length + 1; y++) {
-              indexList.add(time[i].substring(0, y).toLowerCase());
+              for (int i = 0; i < time.length; i++) {
+                for (int y = 1; y < time[i].length + 1; y++) {
+                  indexList.add(time[i].substring(0, y).toLowerCase());
+                }
+              }
             }
-          }
-        }
-        if (injectionPump != '') {
-          List<String> inj = (injectionPump.toString()).split(' ');
+            if (injectionPump != '') {
+              List<String> inj = (injectionPump.toString()).split(' ');
 
-          for (int i = 0; i < inj.length; i++) {
-            for (int y = 1; y < inj[i].length + 1; y++) {
-              indexList.add(inj[i].substring(0, y).toLowerCase());
-              log(indexList.toString());
+              for (int i = 0; i < inj.length; i++) {
+                for (int y = 1; y < inj[i].length + 1; y++) {
+                  indexList.add(inj[i].substring(0, y).toLowerCase());
+                  log(indexList.toString());
+                }
+              }
             }
-          }
-        }
-        setState(() {});
-        await FirebaseFirestore.instance
-            .collection('data')
-            .doc(DateTime.now().toIso8601String())
-            .set({
-          'injectionPump': injectionPump,
-          'governor': governor,
-          'timer': timer,
-          'manufacturer': manufacturer,
-          'engineType': engineType,
-          'vehicleType': vehicleType,
-          'rotation': rotation,
-          'injectionOrder': injectionOrder,
-          'injectionInterval': injectionInterval,
-          'preStroke': preStroke,
-          'tappetClearnce': tappetClearnce,
-          'lockedTimmingLoction': lockedTimmingLoction,
-          'nuzzle': nuzzle,
-          'nuzzleOpeningPressure': nuzzleOpeningPressure,
-          'testOil': testOil,
-          'feedPressure': feedPressure,
-          'highPressurePipe': highPressurePipe,
-          'fuelTemperature': fuelTemperature,
-          'onePumpSpeed1': onePumpSpeed1,
-          'onePumpSpeed2': onePumpSpeed2,
-          'onePumpSpeed3': onePumpSpeed3,
-          'onePumpSpeed4 ': onePumpSpeed4,
-          'oneNos1': oneNos1,
-          'oneNos2': oneNos2,
-          'oneNos3': oneNos3,
-          'oneNos4': oneNos4,
-          'twoNos1': twoNos1,
-          'twoNos2': twoNos2,
-          'twoNos3': twoNos3,
-          'twoNos4': twoNos4,
-          'oneRackTravel1': oneRackTravel1,
-          'oneRackTravel2': oneRackTravel2,
-          'oneRackTravel3': oneRackTravel3,
-          'oneRackTravel4': oneRackTravel4,
-          'oneDeliver1': oneDeliver1,
-          'oneDeliver2': oneDeliver2,
-          'oneDeliver3': oneDeliver3,
-          'oneDeliver4': oneDeliver4,
-          'oneMax1': oneMax1,
-          'oneMax2': oneMax2,
-          'oneMax3': oneMax3,
-          'oneMax4': oneMax4,
-          'lever1': lever1,
-          'lever2': lever2,
-          'lever3': lever3,
-          'lever4': lever4,
-          'twoRackTravel1': twoRackTravel1,
-          'twoRackTravel2': twoRackTravel2,
-          'twoRackTravel3': twoRackTravel3,
-          'twoRackTravel4': twoRackTravel4,
-          'twoDeliver1': twoDeliver1,
-          'twoDeliver2': twoDeliver2,
-          'twoDeliver3': twoDeliver3,
-          'twoDeliver4': twoDeliver4,
-          'oneRemark': oneRemark,
-          'twoRemark': twoRemark,
-          'overFlow': overFlow,
-          'adjustmentOfGoverner': adjustmentOfGoverner,
-          'advanceAngle1': advanceAngle1,
-          'advanceAngle2': advanceAngle2,
-          'advanceAngle3': advanceAngle3,
-          'advanceAngle4': advanceAngle4,
-          'advanceAngle5': advanceAngle5,
-             'advanceAngle6': advanceAngle6,
-          'note': note,
-          'searchArray': indexList,
-          'date': DateTime.now().toIso8601String()
-        });
 
-        Navigator.of(context).pop();
-      }),
+            await FirebaseFirestore.instance.collection('data').doc().set({
+              'injectionPump': injectionPump,
+              'governor': governor,
+              'timer': timer,
+              'manufacturer': manufacturer,
+              'engineType': engineType,
+              'vehicleType': vehicleType,
+              'rotation': rotation,
+              'injectionOrder': injectionOrder,
+              'injectionInterval': injectionInterval,
+              'preStroke': preStroke,
+              'tappetClearnce': tappetClearnce,
+              'lockedTimmingLoction': lockedTimmingLoction,
+              'nuzzle': nuzzle,
+              'nuzzleOpeningPressure': nuzzleOpeningPressure,
+              'testOil': testOil,
+              'feedPressure': feedPressure,
+              'highPressurePipe': highPressurePipe,
+              'fuelTemperature': fuelTemperature,
+              'onePumpSpeed1': onePumpSpeed1,
+              'onePumpSpeed2': onePumpSpeed2,
+              'onePumpSpeed3': onePumpSpeed3,
+              'onePumpSpeed4': onePumpSpeed4,
+              'oneNos1': oneNos1,
+              'oneNos2': oneNos2,
+              'oneNos3': oneNos3,
+              'oneNos4': oneNos4,
+              'twoNos1': twoNos1,
+              'twoNos2': twoNos2,
+              'twoNos3': twoNos3,
+              'twoNos4': twoNos4,
+              'oneRackTravel1': oneRackTravel1,
+              'oneRackTravel2': oneRackTravel2,
+              'oneRackTravel3': oneRackTravel3,
+              'oneRackTravel4': oneRackTravel4,
+              'oneDeliver1': oneDeliver1,
+              'oneDeliver2': oneDeliver2,
+              'oneDeliver3': oneDeliver3,
+              'oneDeliver4': oneDeliver4,
+              'oneMax1': oneMax1,
+              'oneMax2': oneMax2,
+              'oneMax3': oneMax3,
+              'oneMax4': oneMax4,
+              'lever1': lever1,
+              'lever2': lever2,
+              'lever3': lever3,
+              'lever4': lever4,
+              'twoRackTravel1': twoRackTravel1,
+              'twoRackTravel2': twoRackTravel2,
+              'twoRackTravel3': twoRackTravel3,
+              'twoRackTravel4': twoRackTravel4,
+              'twoDeliver1': twoDeliver1,
+              'twoDeliver2': twoDeliver2,
+              'twoDeliver3': twoDeliver3,
+              'twoDeliver4': twoDeliver4,
+              'oneRemark': oneRemark,
+              'twoRemark': twoRemark,
+              'overFlow': overFlow,
+              'adjustmentOfGoverner': adjustmentOfGoverner,
+              'advanceAngle1': advanceAngle1,
+              'advanceAngle2': advanceAngle2,
+              'advanceAngle3': advanceAngle3,
+              'advanceAngle4': advanceAngle4,
+              'advanceAngle5': advanceAngle5,
+              'advanceAngle6': advanceAngle6,
+              'note': note,
+              'searchArray': indexList,
+              'date': DateTime.now().toIso8601String()
+            });
+
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          }),
       backgroundColor: Colors.grey,
       appBar: AppBar(
         title: Text('Add Document'),
@@ -245,16 +247,18 @@ class _DetailState extends State<Detail> {
                               Container(
                                   margin: EdgeInsets.only(right: 160, left: 15),
                                   child: Text(
-                                    'INJECTION PUMP',
+                                    'INJECTION PUMP ',
                                     style: title1,
                                   )),
                               Container(
                                 width: width / 8,
                                 child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      injectionPump = value.toString();
-                                    })),
+                                    child: TextFormField(
+                                        initialValue: injectionPump,
+                                        onChanged: (value) {
+                                          injectionPump = value.toString();
+                                        })),
                               ),
                             ],
                           ),
@@ -270,9 +274,11 @@ class _DetailState extends State<Detail> {
                                 width: width / 8,
                                 child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      governor = value.toString();
-                                    })),
+                                    child: TextFormField(
+                                        initialValue: governor,
+                                        onChanged: (value) {
+                                          governor = value.toString();
+                                        })),
                               ),
                             ],
                           ),
@@ -288,11 +294,11 @@ class _DetailState extends State<Detail> {
                                 width: width / 8,
                                 child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {setState(() {
-                                          
-                                        });
-                                      timer = value.toString();
-                                    })),
+                                    child: TextFormField(
+                                        initialValue: timer,
+                                        onChanged: (value) {
+                                          timer = value.toString();
+                                        })),
                               ),
                             ],
                           ),
@@ -328,9 +334,11 @@ class _DetailState extends State<Detail> {
                               child: Center(
                                   child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  manufacturer = value.toString();
-                                }),
+                                child: TextFormField(
+                                    initialValue: manufacturer,
+                                    onChanged: (value) {
+                                      manufacturer = value.toString();
+                                    }),
                               )),
                             )
                           ],
@@ -361,9 +369,11 @@ class _DetailState extends State<Detail> {
                               child: Center(
                                   child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  engineType = value.toString();
-                                }),
+                                child: TextFormField(
+                                    initialValue: engineType,
+                                    onChanged: (value) {
+                                      engineType = value.toString();
+                                    }),
                               )),
                             )
                           ],
@@ -392,9 +402,11 @@ class _DetailState extends State<Detail> {
                               child: Center(
                                   child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  vehicleType = value.toString();
-                                }),
+                                child: TextFormField(
+                                    initialValue: vehicleType,
+                                    onChanged: (value) {
+                                      vehicleType = value.toString();
+                                    }),
                               )),
                             )
                           ],
@@ -430,9 +442,11 @@ class _DetailState extends State<Detail> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  rotation = value.toString();
-                                })),
+                                child: TextFormField(
+                                    initialValue: rotation,
+                                    onChanged: (value) {
+                                      rotation = value.toString();
+                                    })),
                           )),
                       Spacer(),
                       Text('4) Prestroke                                    '),
@@ -442,24 +456,28 @@ class _DetailState extends State<Detail> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  preStroke = value.toString();
-                                })),
+                                child: TextFormField(
+                                    initialValue: preStroke,
+                                    onChanged: (value) {
+                                      preStroke = value.toString();
+                                    })),
                           ))
                     ],
                   ),
                   Row(
                     children: [
-                      Text('2) Injection Order'),
+                      Text('2) Injection Order   '),
                       Container(
                           width: width / 8,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  injectionOrder = value.toString();
-                                })),
+                                child: TextFormField(
+                                    initialValue: injectionOrder,
+                                    onChanged: (value) {
+                                      injectionOrder = value.toString();
+                                    })),
                           )),
                       Spacer(),
                       Text('5) Tappet Clearence                      '),
@@ -469,9 +487,11 @@ class _DetailState extends State<Detail> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  tappetClearnce = value.toString();
-                                })),
+                                child: TextFormField(
+                                    initialValue: tappetClearnce,
+                                    onChanged: (value) {
+                                      tappetClearnce = value.toString();
+                                    })),
                           ))
                     ],
                   ),
@@ -484,9 +504,11 @@ class _DetailState extends State<Detail> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  injectionInterval = value.toString();
-                                })),
+                                child: TextFormField(
+                                    initialValue: injectionInterval,
+                                    onChanged: (value) {
+                                      injectionInterval = value.toString();
+                                    })),
                           )),
                       Spacer(),
                       Text('6) Locked Timming Loctaion        '),
@@ -496,9 +518,11 @@ class _DetailState extends State<Detail> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  lockedTimmingLoction = value.toString();
-                                })),
+                                child: TextFormField(
+                                    initialValue: lockedTimmingLoction,
+                                    onChanged: (value) {
+                                      lockedTimmingLoction = value.toString();
+                                    })),
                           ))
                     ],
                   ),
@@ -529,9 +553,11 @@ class _DetailState extends State<Detail> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  nuzzle = value.toString();
-                                })),
+                                child: TextFormField(
+                                    initialValue: nuzzle,
+                                    onChanged: (value) {
+                                      nuzzle = value.toString();
+                                    })),
                           )),
                       Spacer(),
                       Text('4) Feed Preasure                            '),
@@ -541,24 +567,28 @@ class _DetailState extends State<Detail> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  feedPressure = value.toString();
-                                })),
+                                child: TextFormField(
+                                    initialValue: feedPressure,
+                                    onChanged: (value) {
+                                      feedPressure = value.toString();
+                                    })),
                           ))
                     ],
                   ),
                   Row(
                     children: [
-                      Text('2) Nozzle Opening Preassure'),
+                      Text('2) Nozzle Opening Preassure '),
                       Container(
                           width: width / 8,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  nuzzleOpeningPressure = value.toString();
-                                })),
+                                child: TextFormField(
+                                    initialValue: nuzzleOpeningPressure,
+                                    onChanged: (value) {
+                                      nuzzleOpeningPressure = value.toString();
+                                    })),
                           )),
                       Spacer(),
                       Text('5) High Preassure Pipe                 '),
@@ -568,9 +598,11 @@ class _DetailState extends State<Detail> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  highPressurePipe = value.toString();
-                                })),
+                                child: TextFormField(
+                                    initialValue: highPressurePipe,
+                                    onChanged: (value) {
+                                      highPressurePipe = value.toString();
+                                    })),
                           ))
                     ],
                   ),
@@ -583,9 +615,11 @@ class _DetailState extends State<Detail> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  testOil = value.toString();
-                                })),
+                                child: TextFormField(
+                                    initialValue: testOil,
+                                    onChanged: (value) {
+                                      testOil = value.toString();
+                                    })),
                           )),
                       Spacer(),
                       Text('6) Fuel Temperature                     '),
@@ -595,9 +629,11 @@ class _DetailState extends State<Detail> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(onChanged: (value) {
-                                  fuelTemperature = value.toString();
-                                })),
+                                child: TextFormField(
+                                    initialValue: fuelTemperature,
+                                    onChanged: (value) {
+                                      fuelTemperature = value.toString();
+                                    })),
                           ))
                     ],
                   ),
@@ -651,118 +687,158 @@ class _DetailState extends State<Detail> {
                                 cells: <DataCell>[
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        onePumpSpeed1 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: onePumpSpeed1,
+                                          onChanged: (value) {
+                                            onePumpSpeed1 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneRackTravel1 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneRackTravel1,
+                                          onChanged: (value) {
+                                            oneRackTravel1 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneNos1 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneNos1,
+                                          onChanged: (value) {
+                                            oneNos1 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneDeliver1 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneDeliver1,
+                                          onChanged: (value) {
+                                            oneDeliver1 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneMax1 = value.toString();
-                                        ;
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneMax1,
+                                          onChanged: (value) {
+                                            oneMax1 = value.toString();
+                                            ;
+                                          }))),
                                 ],
                               ),
                               DataRow(
                                 cells: <DataCell>[
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        onePumpSpeed2 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: onePumpSpeed2,
+                                          onChanged: (value) {
+                                            onePumpSpeed2 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneRackTravel2 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneRackTravel2,
+                                          onChanged: (value) {
+                                            oneRackTravel2 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneNos2 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneNos2,
+                                          onChanged: (value) {
+                                            oneNos2 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneDeliver2 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneDeliver2,
+                                          onChanged: (value) {
+                                            oneDeliver2 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneMax2 = value.toString();
-                                        ;
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneMax2,
+                                          onChanged: (value) {
+                                            oneMax2 = value.toString();
+                                            ;
+                                          }))),
                                 ],
                               ),
                               DataRow(
                                 cells: <DataCell>[
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        onePumpSpeed3 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: onePumpSpeed3,
+                                          onChanged: (value) {
+                                            onePumpSpeed3 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneRackTravel3 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneRackTravel3,
+                                          onChanged: (value) {
+                                            oneRackTravel3 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneNos3 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneNos3,
+                                          onChanged: (value) {
+                                            oneNos3 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneDeliver3 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneDeliver3,
+                                          onChanged: (value) {
+                                            oneDeliver3 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneMax3 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneMax3,
+                                          onChanged: (value) {
+                                            oneMax3 = value.toString();
+                                          }))),
                                 ],
                               ),
                               DataRow(
                                 cells: <DataCell>[
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        onePumpSpeed4 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: onePumpSpeed4,
+                                          onChanged: (value) {
+                                            onePumpSpeed4 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneRackTravel4 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneRackTravel4,
+                                          onChanged: (value) {
+                                            oneRackTravel4 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneNos4 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneNos4,
+                                          onChanged: (value) {
+                                            oneNos4 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneDeliver4 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneDeliver4,
+                                          onChanged: (value) {
+                                            oneDeliver4 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        oneMax4 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: oneMax4,
+                                          onChanged: (value) {
+                                            oneMax4 = value.toString();
+                                          }))),
                                 ],
                               ),
                             ],
@@ -786,6 +862,7 @@ class _DetailState extends State<Detail> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
+                                  initialValue: oneRemark,
                                   onChanged: (value) {
                                     oneRemark = value.toString();
                                   },
@@ -812,9 +889,11 @@ class _DetailState extends State<Detail> {
                       width: width * 0.4,
                       child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(onChanged: (value) {
-                            overFlow = value.toString();
-                          })))
+                          child: TextFormField(
+                              initialValue: overFlow,
+                              onChanged: (value) {
+                                overFlow = value.toString();
+                              })))
                 ],
               ),
             ),
@@ -830,9 +909,11 @@ class _DetailState extends State<Detail> {
                       width: width * 0.6,
                       child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(onChanged: (value) {
-                            adjustmentOfGoverner = value.toString();
-                          })))
+                          child: TextFormField(
+                              initialValue: adjustmentOfGoverner,
+                              onChanged: (value) {
+                                adjustmentOfGoverner = value.toString();
+                              })))
                 ],
               ),
             ),
@@ -882,96 +963,128 @@ class _DetailState extends State<Detail> {
                               cells: <DataCell>[
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      lever1 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: lever1,
+                                        onChanged: (value) {
+                                          lever1 = value.toString();
+                                        }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      twoRackTravel1 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: twoRackTravel1,
+                                        onChanged: (value) {
+                                          twoRackTravel1 = value.toString();
+                                        }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      twoNos1 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: twoNos1,
+                                        onChanged: (value) {
+                                          twoNos1 = value.toString();
+                                        }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      twoDeliver1 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: twoDeliver1,
+                                        onChanged: (value) {
+                                          twoDeliver1 = value.toString();
+                                        }))),
                               ],
                             ),
                             DataRow(
                               cells: <DataCell>[
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      lever2 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: lever2,
+                                        onChanged: (value) {
+                                          lever2 = value.toString();
+                                        }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      twoRackTravel2 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: twoRackTravel2,
+                                        onChanged: (value) {
+                                          twoRackTravel2 = value.toString();
+                                        }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      twoNos2 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: twoNos2,
+                                        onChanged: (value) {
+                                          twoNos2 = value.toString();
+                                        }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      twoDeliver2 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: twoDeliver2,
+                                        onChanged: (value) {
+                                          twoDeliver2 = value.toString();
+                                        }))),
                               ],
                             ),
                             DataRow(
                               cells: <DataCell>[
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      lever3 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: lever3,
+                                        onChanged: (value) {
+                                          lever3 = value.toString();
+                                        }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      twoRackTravel3 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: twoRackTravel3,
+                                        onChanged: (value) {
+                                          twoRackTravel3 = value.toString();
+                                        }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      twoNos3 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: twoNos3,
+                                        onChanged: (value) {
+                                          twoNos3 = value.toString();
+                                        }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      twoDeliver3 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: twoDeliver3,
+                                        onChanged: (value) {
+                                          twoDeliver3 = value.toString();
+                                        }))),
                               ],
                             ),
                             DataRow(
                               cells: <DataCell>[
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      lever4 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: lever4,
+                                        onChanged: (value) {
+                                          lever4 = value.toString();
+                                        }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      twoRackTravel4 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: twoRackTravel4,
+                                        onChanged: (value) {
+                                          twoRackTravel4 = value.toString();
+                                        }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      twoNos4 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: twoNos4,
+                                        onChanged: (value) {
+                                          twoNos4 = value.toString();
+                                        }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(onChanged: (value) {
-                                      twoDeliver4 = value.toString();
-                                    }))),
+                                    child: TextFormField(
+                                        initialValue: twoDeliver4,
+                                        onChanged: (value) {
+                                          twoDeliver4 = value.toString();
+                                        }))),
                               ],
                             ),
                           ],
@@ -995,6 +1108,7 @@ class _DetailState extends State<Detail> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: TextFormField(
+                                initialValue: twoRemark,
                                 onChanged: (value) {
                                   twoRemark = value.toString();
                                 },
@@ -1022,9 +1136,11 @@ class _DetailState extends State<Detail> {
                       width: width * 0.6,
                       child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(onChanged: (value) {
-                            note = value.toString();
-                          })))
+                          child: TextFormField(
+                              initialValue: note,
+                              onChanged: (value) {
+                                note = value.toString();
+                              })))
                 ],
               ),
             ),
@@ -1092,34 +1208,46 @@ class _DetailState extends State<Detail> {
                                       ))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        advanceAngle1 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: advanceAngle1,
+                                          onChanged: (value) {
+                                            advanceAngle1 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        advanceAngle2 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: advanceAngle2,
+                                          onChanged: (value) {
+                                            advanceAngle2 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        advanceAngle3 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: advanceAngle3,
+                                          onChanged: (value) {
+                                            advanceAngle3 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        advanceAngle4 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: advanceAngle4,
+                                          onChanged: (value) {
+                                            advanceAngle4 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        advanceAngle5 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: advanceAngle5,
+                                          onChanged: (value) {
+                                            advanceAngle5 = value.toString();
+                                          }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(onChanged: (value) {
-                                        advanceAngle6 = value.toString();
-                                      }))),
+                                      child: TextFormField(
+                                          initialValue: advanceAngle6,
+                                          onChanged: (value) {
+                                            advanceAngle6 = value.toString();
+                                          }))),
                                 ],
                               ),
                             ],

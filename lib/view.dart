@@ -161,7 +161,7 @@ class _ViewState extends State<View> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 10),
+              padding: EdgeInsets.all( 20),
               child: const Text(
                 'Apakah Anda yakin ?',
                 style: TextStyle(color: Colors.white),
@@ -198,20 +198,29 @@ class _ViewState extends State<View> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey,
-      appBar: AppBar(title: Text('View Document'), actions: [
-        IconButton(
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => Update(widget.data, widget.id),
-              ));
-            },
-            icon: Icon(Icons.edit)),
-        IconButton(
-            onPressed: () {
-              delete();
-            },
-            icon: Icon(Icons.delete))
-      ]),
+      appBar: AppBar(
+          title: Text('View Document'),
+          leading: IconButton(
+              onPressed: () {
+                ScaffoldMessenger.of(context)..removeCurrentSnackBar();
+
+                Navigator.of(context).pop();
+              },
+              icon: Icon(Icons.arrow_circle_left_rounded)),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Update(widget.data, widget.id),
+                  ));
+                },
+                icon: Icon(Icons.edit)),
+            IconButton(
+                onPressed: () {
+                  delete();
+                },
+                icon: Icon(Icons.delete))
+          ]),
       body: Container(
         decoration: BoxDecoration(
             color: Colors.grey.shade200,
@@ -240,15 +249,15 @@ class _ViewState extends State<View> {
                               Container(
                                   margin: EdgeInsets.only(right: 160, left: 15),
                                   child: Text(
-                                    'INJECTION PUMP',
+                                    'INJECTION PUMP ',
                                     style: title1,
                                   )),
                               Container(
                                 width: width / 8,
                                 child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: injectionPump,
@@ -270,8 +279,8 @@ class _ViewState extends State<View> {
                                 width: width / 8,
                                 child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: governor,
@@ -293,8 +302,8 @@ class _ViewState extends State<View> {
                                 width: width / 8,
                                 child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: timer,
@@ -336,8 +345,8 @@ class _ViewState extends State<View> {
                               child: Center(
                                   child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: manufacturer,
@@ -374,8 +383,8 @@ class _ViewState extends State<View> {
                               child: Center(
                                   child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: engineType,
@@ -410,8 +419,8 @@ class _ViewState extends State<View> {
                               child: Center(
                                   child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: vehicleType,
@@ -453,8 +462,8 @@ class _ViewState extends State<View> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: rotation,
@@ -470,8 +479,8 @@ class _ViewState extends State<View> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: preStroke,
@@ -483,15 +492,15 @@ class _ViewState extends State<View> {
                   ),
                   Row(
                     children: [
-                      Text('2) Injection Order'),
+                      Text('2) Injection Order   '),
                       Container(
                           width: width / 8,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: injectionOrder,
@@ -507,8 +516,8 @@ class _ViewState extends State<View> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: tappetClearnce,
@@ -527,8 +536,8 @@ class _ViewState extends State<View> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: injectionInterval,
@@ -544,8 +553,8 @@ class _ViewState extends State<View> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: lockedTimmingLoction,
@@ -582,8 +591,8 @@ class _ViewState extends State<View> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: nuzzle,
@@ -599,8 +608,8 @@ class _ViewState extends State<View> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: feedPressure,
@@ -612,15 +621,15 @@ class _ViewState extends State<View> {
                   ),
                   Row(
                     children: [
-                      Text('2) Nozzle Opening Preassure'),
+                      Text('2) Nozzle Opening Preassure '),
                       Container(
                           width: width / 8,
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: nuzzleOpeningPressure,
@@ -636,8 +645,8 @@ class _ViewState extends State<View> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: highPressurePipe,
@@ -656,8 +665,8 @@ class _ViewState extends State<View> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: testOil,
@@ -673,8 +682,8 @@ class _ViewState extends State<View> {
                             padding: const EdgeInsets.all(8.0),
                             child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
-                                    decoration: InputDecoration(
+                                child: TextFormField(textAlign: TextAlign.center,
+                                    decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                         border: InputBorder.none),
                                     readOnly: true,
                                     initialValue: fuelTemperature,
@@ -734,8 +743,8 @@ class _ViewState extends State<View> {
                                 cells: <DataCell>[
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: onePumpSpeed1,
@@ -744,8 +753,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneRackTravel1,
@@ -754,8 +763,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneNos1,
@@ -764,8 +773,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneDeliver1,
@@ -774,8 +783,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneMax1,
@@ -789,8 +798,8 @@ class _ViewState extends State<View> {
                                 cells: <DataCell>[
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: onePumpSpeed2,
@@ -799,8 +808,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneRackTravel2,
@@ -809,8 +818,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneNos2,
@@ -819,8 +828,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneDeliver2,
@@ -829,8 +838,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneMax2,
@@ -844,8 +853,8 @@ class _ViewState extends State<View> {
                                 cells: <DataCell>[
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: onePumpSpeed3,
@@ -854,8 +863,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneRackTravel3,
@@ -864,8 +873,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneNos3,
@@ -874,8 +883,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneDeliver3,
@@ -884,8 +893,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneMax3,
@@ -898,8 +907,8 @@ class _ViewState extends State<View> {
                                 cells: <DataCell>[
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: onePumpSpeed4,
@@ -908,8 +917,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneRackTravel4,
@@ -918,8 +927,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneNos4,
@@ -928,8 +937,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneDeliver4,
@@ -938,8 +947,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: oneMax4,
@@ -968,9 +977,9 @@ class _ViewState extends State<View> {
                               width: width * 0.1383,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: TextFormField(
+                                child: TextFormField(textAlign: TextAlign.center,
                                   decoration:
-                                      InputDecoration(border: InputBorder.none),
+                                      InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,border: InputBorder.none),
                                   readOnly: true,
                                   initialValue: oneRemark,
                                   onChanged: (value) {
@@ -999,9 +1008,9 @@ class _ViewState extends State<View> {
                       width: width * 0.4,
                       child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
+                          child: TextFormField(textAlign: TextAlign.center,
                               decoration:
-                                  InputDecoration(border: InputBorder.none),
+                                  InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,border: InputBorder.none),
                               readOnly: true,
                               initialValue: overFlow,
                               onChanged: (value) {
@@ -1022,9 +1031,9 @@ class _ViewState extends State<View> {
                       width: width * 0.6,
                       child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
+                          child: TextFormField(textAlign: TextAlign.center,
                               decoration:
-                                  InputDecoration(border: InputBorder.none),
+                                  InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,border: InputBorder.none),
                               readOnly: true,
                               initialValue: adjustmentOfGoverner,
                               onChanged: (value) {
@@ -1079,8 +1088,8 @@ class _ViewState extends State<View> {
                               cells: <DataCell>[
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: lever1,
@@ -1089,8 +1098,8 @@ class _ViewState extends State<View> {
                                         }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: twoRackTravel1,
@@ -1099,8 +1108,8 @@ class _ViewState extends State<View> {
                                         }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: twoNos1,
@@ -1109,8 +1118,8 @@ class _ViewState extends State<View> {
                                         }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: twoDeliver1,
@@ -1123,8 +1132,8 @@ class _ViewState extends State<View> {
                               cells: <DataCell>[
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: lever2,
@@ -1133,8 +1142,8 @@ class _ViewState extends State<View> {
                                         }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: twoRackTravel2,
@@ -1143,8 +1152,8 @@ class _ViewState extends State<View> {
                                         }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: twoNos2,
@@ -1153,8 +1162,8 @@ class _ViewState extends State<View> {
                                         }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: twoDeliver2,
@@ -1167,8 +1176,8 @@ class _ViewState extends State<View> {
                               cells: <DataCell>[
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: lever3,
@@ -1177,8 +1186,8 @@ class _ViewState extends State<View> {
                                         }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: twoRackTravel3,
@@ -1187,8 +1196,8 @@ class _ViewState extends State<View> {
                                         }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: twoNos3,
@@ -1197,8 +1206,8 @@ class _ViewState extends State<View> {
                                         }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: twoDeliver3,
@@ -1211,8 +1220,8 @@ class _ViewState extends State<View> {
                               cells: <DataCell>[
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: lever4,
@@ -1221,8 +1230,8 @@ class _ViewState extends State<View> {
                                         }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: twoRackTravel4,
@@ -1231,8 +1240,8 @@ class _ViewState extends State<View> {
                                         }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: twoNos4,
@@ -1241,8 +1250,8 @@ class _ViewState extends State<View> {
                                         }))),
                                 DataCell(Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: TextFormField(
-                                        decoration: InputDecoration(
+                                    child: TextFormField(textAlign: TextAlign.center,
+                                        decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                             border: InputBorder.none),
                                         readOnly: true,
                                         initialValue: twoDeliver4,
@@ -1271,9 +1280,9 @@ class _ViewState extends State<View> {
                             width: width * 0.1383,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: TextFormField(
+                              child: TextFormField(textAlign: TextAlign.center,
                                 decoration:
-                                    InputDecoration(border: InputBorder.none),
+                                    InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,border: InputBorder.none),
                                 readOnly: true,
                                 initialValue: twoRemark,
                                 onChanged: (value) {
@@ -1303,9 +1312,9 @@ class _ViewState extends State<View> {
                       width: width * 0.6,
                       child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: TextFormField(
+                          child: TextFormField(textAlign: TextAlign.center,
                               decoration:
-                                  InputDecoration(border: InputBorder.none),
+                                  InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,border: InputBorder.none),
                               readOnly: true,
                               initialValue: note,
                               onChanged: (value) {
@@ -1378,8 +1387,8 @@ class _ViewState extends State<View> {
                                       ))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: advanceAngle1,
@@ -1388,8 +1397,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: advanceAngle2,
@@ -1398,8 +1407,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: advanceAngle3,
@@ -1408,8 +1417,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: advanceAngle4,
@@ -1418,8 +1427,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: advanceAngle5,
@@ -1428,8 +1437,8 @@ class _ViewState extends State<View> {
                                           }))),
                                   DataCell(Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: TextFormField(
-                                          decoration: InputDecoration(
+                                      child: TextFormField(textAlign: TextAlign.center,
+                                          decoration: InputDecoration(enabledBorder: InputBorder.none,focusedBorder: InputBorder.none,
                                               border: InputBorder.none),
                                           readOnly: true,
                                           initialValue: advanceAngle6,
